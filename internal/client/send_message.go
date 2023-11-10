@@ -57,3 +57,7 @@ func SendTextMsgSimple(receiveID, msgStr string) error {
 	return SendMsgSimple(receiveID, "open_id", "text",
 		fmt.Sprintf("{\"text\":\"%s\"}", msgStr))
 }
+
+func SendTextMsgContentSimple(receiveID, msgContent string) error {
+	return SendMsgSimple(receiveID, "open_id", "text", msgContent)
+}
