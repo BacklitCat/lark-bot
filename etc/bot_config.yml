@@ -3,7 +3,7 @@ Server:
 
 Lark:
   AppID: cli_a5c372574e18100b
-  AppSecret : whtNRTbTkeZEBVRO9Wh3ChPYpTEteeW0
-  EncryptKey: sIKdr6QvhLtCVde7epK4IcOUwVEfUSlv
-  VerificationToken: FZAFJ1ZY5IdZE5fY7dF51bCmaazOqD1Z
+  AppSecret : xxxxxxxxxxxxxxxxxxx
+  EncryptKey: xxxxxxxxxxxxxxxxxxx
+  VerificationToken: xxxxxxxxxxxxxxxxxxx
   UpdateTokenDeltaTimeSecond: 10
