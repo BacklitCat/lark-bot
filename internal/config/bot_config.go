@@ -3,6 +3,7 @@ package config
 var Bot BotConfig
 
 type BotConfig struct {
+	Name   string `yaml:"Name"`
 	Server Server `yaml:"Server"`
 	Lark   Lark   `yaml:"Lark"`
 }
