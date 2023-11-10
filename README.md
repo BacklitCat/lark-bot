@@ -1,7 +1,12 @@
 
-```
-go get -u github.com/larksuite/oapi-sdk-go/v3
-go get -u github.com/larksuite/oapi-sdk-gin
-go get -u github.com/gin-gonic/gin
-go get -u gopkg.in/yaml.v3
-```
+## 功能
+
+✅ 已完成 🟨 已排期 🟧 未排期
+ 
+- 飞书内通信 🟨
+    - 发送私聊文本消息 ✅
+    - 发送群组文本消息 🟨
+    - 发送私聊卡片消息 🟨
+    - 发送群组卡片消息 🟨
+
+- 监控 🟧
