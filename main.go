@@ -3,8 +3,9 @@ package main
 import (
 	"context"
 	"fmt"
-	"larkbot/internal/client"
 	"larkbot/internal/config"
+	"larkbot/internal/handler"
+	"larkbot/internal/middleware"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -25,21 +26,10 @@ func main() {
 	// 	lark.WithHttpClient(http.DefaultClient))
 
 	// 注册消息处理器
-	handler := dispatcher.NewEventDispatcher(config.Bot.Lark.VerificationToken, config.Bot.Lark.EncryptKey).
+	handler := dispatcher.NewEventDispatcher(config.Bot.Lark.Secret.VerificationToken, config.Bot.Lark.Secret.EncryptKey).
 		// 机器人接收到用户发送的消息后触发此事件
-		OnP2MessageReceiveV1(func(ctx context.Context, event *larkim.P2MessageReceiveV1) error {
-			fmt.Println(larkcore.Prettify(event))
-			fmt.Println(event.RequestId())
-
-			// 临时做个复读机
-			fmt.Println(*event.Event.Sender.SenderId.OpenId, *event.Event.Message.Content)
-			err := client.SendTextMsgSimple(*event.Event.Sender.SenderId.OpenId, *event.Event.Message.Content)
-			if err != nil {
-				fmt.Println(err)
-			}
-
-			return nil
-		}).
+		// 临时复读机
+		OnP2MessageReceiveV1(handler.RepeatMachineHandler).
 		// 用户阅读机器人发送的单聊消息后触发此事件
 		OnP2MessageReadV1(func(ctx context.Context, event *larkim.P2MessageReadV1) error {
 			fmt.Println(larkcore.Prettify(event))
@@ -48,7 +38,7 @@ func main() {
 		})
 
 	// 创建卡片行为处理器
-	cardHandler := larkcard.NewCardActionHandler(config.Bot.Lark.VerificationToken, config.Bot.Lark.EncryptKey,
+	cardHandler := larkcard.NewCardActionHandler(config.Bot.Lark.Secret.VerificationToken, config.Bot.Lark.Secret.EncryptKey,
 		func(ctx context.Context, cardAction *larkcard.CardAction) (interface{}, error) {
 			fmt.Println(larkcore.Prettify(cardAction))
 
@@ -63,6 +53,8 @@ func main() {
 		})
 
 	g := gin.Default()
+
+	g.Use(middleware.LoggerToFile())
 
 	g.GET("/", func(c *gin.Context) {
 		c.String(http.StatusOK, "lark_bot")

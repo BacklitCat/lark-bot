@@ -8,10 +8,12 @@ import (
 	"larkbot/larktype"
 )
 
-func SendTextMsgSimple(receiveID, msgContent string) error {
+// SendMsgSimple
+// https://open.feishu.cn/document/server-docs/im-v1/message/create?appId=cli_a5c372574e18100b
+func SendMsgSimple(receiveID, receiveIDType, msgType, msgContent string) error {
 	req := larktype.MessagesReq{
 		ReceiveID: receiveID,
-		MsgType:   "text",
+		MsgType:   msgType,
 		Content:   msgContent,
 		UUID:      "",
 	}
@@ -30,14 +32,18 @@ func SendTextMsgSimple(receiveID, msgContent string) error {
 		return err
 	}
 
-	httpRespBody, err := doHTTP(reqBody, config.LarkAPI.MESSAGES.Method, config.LarkAPI.MESSAGES.Url+"?receive_id_type=open_id", header)
+	respBody, err := doHttpDefaultClient(
+		reqBody,
+		config.LarkAPI.MESSAGES.Method,
+		fmt.Sprintf("%s?receive_id_type=%s", config.LarkAPI.MESSAGES.Url, receiveIDType),
+		header)
 
 	if err != nil {
 		return err
 	}
 
 	var resp larktype.MessagesResp
-	if err = json.Unmarshal(httpRespBody, &resp); err != nil {
+	if err = json.Unmarshal(respBody, &resp); err != nil {
 		return err
 	}
 
@@ -45,4 +51,13 @@ func SendTextMsgSimple(receiveID, msgContent string) error {
 		return fmt.Errorf("lark say, code:%d msg: %s", resp.Code, resp.Msg)
 	}
 	return nil
+}
+
+func SendTextMsgSimple(receiveID, msgStr string) error {
+	return SendMsgSimple(receiveID, "open_id", "text",
+		fmt.Sprintf("{\"text\":\"%s\"}", msgStr))
+}
+
+func SendTextMsgContentSimple(receiveID, msgContent string) error {
+	return SendMsgSimple(receiveID, "open_id", "text", msgContent)
 }

@@ -45,7 +45,7 @@ func GetTenentAccessTokenFromLark() (string, int64, error) {
 
 	taReq := &larktype.TenantAccessTokenReq{
 		AppID:     config.Bot.Lark.AppID,
-		AppSecret: config.Bot.Lark.AppSecret,
+		AppSecret: config.Bot.Lark.Secret.AppSecret,
 	}
 
 	taResp := &larktype.TenantAccessTokenResp{}

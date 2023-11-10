@@ -25,7 +25,7 @@ func GetTenentAccessTokenHeader() (*http.Header, error) {
 	return h, nil
 }
 
-func doHTTP(reqBody []byte, method, url string, header *http.Header) (respBody []byte, err error) {
+func doHttpDefaultClient(reqBody []byte, method, url string, header *http.Header) (respBody []byte, err error) {
 
 	httpReq, err := http.NewRequest(method, url, bytes.NewReader(reqBody))
 	if err != nil {
@@ -47,7 +47,7 @@ func doHTTP(reqBody []byte, method, url string, header *http.Header) (respBody [
 	}
 
 	if len(respBody) == 0 {
-		return nil, errors.New("doHTTP len(respBody)=0")
+		return nil, errors.New("doHttpDefaultClient len(respBody)=0")
 	}
 
 	return

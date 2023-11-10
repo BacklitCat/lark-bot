@@ -1,9 +1,8 @@
+Name: larkbot
+
 Server:
   Port: 22000
 
 Lark:
   AppID: cli_a5c372574e18100b
-  AppSecret : nMTffRhDJXDwP9UfeQxMVbRHYf6kYpT3
-  EncryptKey: cuMqq1w3MFTbolCqEN62FbWoGd6IHqeB
-  VerificationToken: daKmPDTmWxqhjELpwheBKfDsRw0smvAw
   UpdateTokenDeltaTimeSecond: 10

@@ -7,7 +7,10 @@ import (
 	"gopkg.in/yaml.v3"
 )
 
-var ProjectPath = os.Getenv("PROJECT_LARK_BOT")
+var (
+	ProjectPath = os.Getenv("PROJECT_LARK_BOT")
+	LogPath     = ProjectPath + "/log"
+)
 
 func MustLoadConfig(filePath string, conf any) {
 	content, err := os.ReadFile(filePath)
