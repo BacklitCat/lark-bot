@@ -32,8 +32,8 @@ func main() {
 		OnP2MessageReceiveV1(handler.RepeatMachineHandler).
 		// 用户阅读机器人发送的单聊消息后触发此事件
 		OnP2MessageReadV1(func(ctx context.Context, event *larkim.P2MessageReadV1) error {
-			fmt.Println(larkcore.Prettify(event))
-			fmt.Println(event.RequestId())
+			// fmt.Println(larkcore.Prettify(event))
+			// fmt.Println(event.RequestId())
 			return nil
 		})
 
